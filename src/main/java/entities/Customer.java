@@ -7,14 +7,15 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Table(name = "customers")
 @Entity
+@Table(name = "customers")
 public class Customer {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerID;
+    @Column(name = "customer_id")
+    private Integer customerID;
 
     @Column(name = "customer_name")
     private String customerName;
@@ -22,24 +23,24 @@ public class Customer {
     @Column(name = "nip")
     private String nip;
 
-    @Column(name = "full_company)")
+    @Column(name = "company_full_name")
     private String fullCompanyName;
 
-    @Column(name = "post_code)")
+    @Column(name = "post_code")
     private String postCode;
 
-    @Column(name = "street)")
+    @Column(name = "street")
     private String street;
 
-    @Column(name = "city)")
+    @Column(name = "city")
     private String city;
 
-    @Column(name = "country)")
+    @Column(name = "country")
     private String country;
 
-    @Column(name = "phone_number)")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "email)")
+    @Column(name = "email")
     private String email;
 }

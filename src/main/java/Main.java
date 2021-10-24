@@ -3,6 +3,8 @@ import org.hibernate.Session;
 import utils.HibernateUtil;
 
 public class Main {
+
+
     public static void main(String[] args) {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -21,7 +23,8 @@ public class Main {
         customer.setStreet("Wschodnia 3");
         customer.setPhoneNumber("500079283");
 
-        session.save(customer);
+
+        session.saveOrUpdate(customer);
         session.getTransaction().commit();
         session.close();
         HibernateUtil.close();
