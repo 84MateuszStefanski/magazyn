@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public class ProductComposer {
 
-    public void createProduct(
+    public Product createProduct(
             String catalogNumber,
             String product_name,
             Integer quantity,
@@ -21,6 +21,8 @@ public class ProductComposer {
         product.setGrossPurchasePrice(grossPurchasePriceCalculate(netPurchasePrice));
         product.setNetSellingPrice(netSellPriceCalculate(netPurchasePrice));
         product.setGrossSellingPrice(product.getNetSellingPrice());
+
+        return product;
     }
 
 
