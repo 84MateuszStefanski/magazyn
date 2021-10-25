@@ -7,14 +7,13 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
 @Table(name = "customers")
+@Entity
 public class Customer {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
     private Integer customerID;
 
     @Column(name = "customer_name")
@@ -23,7 +22,7 @@ public class Customer {
     @Column(name = "nip")
     private String nip;
 
-    @Column(name = "company_full_name")
+    @Column(name = "full_company")
     private String fullCompanyName;
 
     @Column(name = "post_code")
