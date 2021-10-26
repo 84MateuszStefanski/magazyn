@@ -20,7 +20,7 @@ public class ProductComposer {
 
         product.setGrossPurchasePrice(grossPurchasePriceCalculate(netPurchasePrice));
         product.setNetSellingPrice(netSellPriceCalculate(netPurchasePrice));
-        product.setGrossSellingPrice(product.getNetSellingPrice());
+        product.setGrossSellingPrice(grossSellPriceCalculate(product.getNetSellingPrice()));
 
         return product;
     }
@@ -47,18 +47,18 @@ public class ProductComposer {
         }
     }
 
-    private BigDecimal grossSellPriceCalculate(BigDecimal netSellingPrice){
+    private BigDecimal grossSellPriceCalculate(BigDecimal netSellingPrice) {
         if (isNotNullOrZero(netSellingPrice)) {
             BigDecimal grossSellingPrice =
                     netSellingPrice.add(netSellingPrice.multiply(Tax.TAX_23.getTaxRate()));
             return grossSellingPrice;
-        }else {
+        } else {
             return BigDecimal.ZERO;
         }
 
     }
 
-    private boolean isNotNullOrZero(BigDecimal price){
+    private boolean isNotNullOrZero(BigDecimal price) {
         return price != null && price.compareTo(BigDecimal.ZERO) > 0;
     }
 

@@ -1,6 +1,7 @@
 package composers;
 
 import entities.Product;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -10,38 +11,27 @@ import static org.hamcrest.Matchers.*;
 
 class ProductComposerTest {
 
-    @Test
-    void shouldCreateProduct() {
-        //given
+    private Product product;
+
+    @BeforeEach
+    void createProductForTests() {
         ProductComposer composer = new ProductComposer();
-        Product product = new Product();
-        //when
-        product.setProductID(1);
         product = composer.createProduct(
                 "yt-0400",
                 "Zestaw kluczy",
                 5,
-                BigDecimal.valueOf(42.00));
-        //then
+                BigDecimal.valueOf(42));
+    }
+
+    @Test
+    void shouldCreateProduct() {
 
         assertThat(product, notNullValue());
         assertThat(product, instanceOf(Product.class));
     }
 
     @Test
-    void shoudCalculateGrossPurchasePriceCorrectly(){
-        //given
-        ProductComposer composer = new ProductComposer();
-        Product product = new Product();
-
-        //when
-
-        product = composer.createProduct(
-                "yt-0400",
-                "Zestaw kluczy",
-                5,
-                BigDecimal.valueOf(42));
-        //then
+    void shoudCalculateGrossPurchasePriceCorrectly() {
 
         assertThat(product.getCatalogNumber(), equalTo("yt-0400"));
         assertThat(product.getGrossPurchasePrice(), equalTo(BigDecimal.valueOf(51.66)));
@@ -49,24 +39,13 @@ class ProductComposerTest {
 
 
     @Test
-    void shoudCalculateNetSellingPriceCorrectly(){
-        //given
-        ProductComposer composer = new ProductComposer();
-        Product product = new Product();
-
-        //when
-
-        product = composer.createProduct(
-                "yt-0400",
-                "Zestaw kluczy",
-                5,
-                BigDecimal.valueOf(42));
-        //then
-
-
+    void shoudCalculateNetSellingPriceCorrectly() {
         assertThat(product.getNetSellingPrice(), equalTo(BigDecimal.valueOf(67.20)));
     }
 
-    //todo dopisać @BeforeEach z produktem bo jest w kazdym tescie
+    @Test
+    void shoudCalculaterGrossSellingPriceCorrectly() {
+        assertThat(product.getGrossSellingPrice(), equalTo(BigDecimal.valueOf(82.656)));
+    }
 
 }
