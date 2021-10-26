@@ -12,5 +12,17 @@
       <working-dir>$ProjectFileDir$</working-dir>
       <time-zone>UTC+2</time-zone>
     </data-source>
+    <data-source source="LOCAL" name="magazyn_faktura" uuid="f7c4e5a7-544f-473b-8807-c2228349a7cd">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+D:/Programowanie/Java.Workplace/Magazyn_faktura/src/main/resources/hibernate.cfg.xml</remarks>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/magazyn_faktura</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <time-zone>UTC+2</time-zone>
+    </data-source>
   </component>
 </project>
