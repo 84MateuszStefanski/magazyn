@@ -19,8 +19,9 @@ public class Product {
     @Column(name = "catalog_number")
     private String catalogNumber;
 
+
     @Column(name = "product_name")
-    private String product_name;
+    private String productName;
 
     @Column(name = "quantity")
     private Integer quantity;

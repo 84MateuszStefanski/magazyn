@@ -1,7 +1,7 @@
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
-public class Main {
+public class App {
 
 
     public static void main(String[] args) {

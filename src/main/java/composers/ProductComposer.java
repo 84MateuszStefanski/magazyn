@@ -14,7 +14,7 @@ public class ProductComposer {
 
         Product product = new Product();
         product.setCatalogNumber(catalogNumber);
-        product.setProduct_name(product_name);
+        product.setProductName(product_name);
         product.setNetPurchasePrice(netPurchasePrice);
         product.setQuantity(quantity);
 

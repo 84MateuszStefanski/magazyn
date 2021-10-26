@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,4 +43,10 @@ public class Customer {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "customer_level")
+    private CustomerLevel customerLevel;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
 }
