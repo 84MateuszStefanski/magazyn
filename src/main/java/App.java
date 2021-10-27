@@ -1,33 +1,47 @@
+import composers.CustomerComposer;
+import composers.ProductComposer;
+import daoservices.ProductSearchEngine;
+import entities.Product;
 import org.hibernate.Session;
 import utils.HibernateUtil;
+
+import java.math.BigDecimal;
 
 public class App {
 
 
     public static void main(String[] args) {
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
+//        CustomerComposer composer = new CustomerComposer();
+//        ProductComposer productComposer = new ProductComposer();
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        session.beginTransaction();
 
+        System.out.println(ProductSearchEngine.getGrossSellingPriceByProductId(1).toString());
 
+//        Product product = productComposer.createProduct(
+//                "yt-3884",
+//                "Tool set",
+//                5,
+//                BigDecimal.valueOf(330.00)
+//        );
 
+//        session.save(product);
 
-//        Customer customer = new Customer();
-//        customer.setCustomerID(1);
-//        customer.setCustomerName("Maxtool");
-//        customer.setNip("5555555555");
-//        customer.setFullCompanyName("Maxtool spółka jawna");
-//        customer.setCity("Raszyn");
-//        customer.setCountry("Poland");
-//        customer.setEmail("maxtool@pl.pl");
-//        customer.setPostCode("05-090");
-//        customer.setStreet("Wschodnia 3");
-//        customer.setPhoneNumber("517771863");
-//
-//
+//        Customer customer = composer.createCustomer(
+//                "Maxtool",
+//                "5555555555",
+//                "Maxtool spółka jawna",
+//                "05-090",
+//                "Wschodnia 3",
+//                "Raszyn",
+//                "Poland",
+//                "517771863",
+//                "maxtool@pl.pl");
+
 //        session.save(customer);
-        session.getTransaction().commit();
-        session.close();
-        HibernateUtil.close();
+//        session.getTransaction().commit();
+//        session.close();
+//        HibernateUtil.close();
     }
 }
