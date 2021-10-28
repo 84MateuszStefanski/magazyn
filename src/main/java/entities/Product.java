@@ -2,6 +2,7 @@ package entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -39,6 +40,16 @@ public class Product {
     private BigDecimal grossSellingPrice;
 
 
-
-
+    @Override
+    public String toString() {
+        return "Product description " + '\n' +
+                " productID = " + productID + '\n' +
+                " catalogNumber = " + catalogNumber + '\n' +
+                " productName = " + productName + '\n' +
+                " quantity = " + quantity + '\n' +
+                " netPurchasePrice = " + netPurchasePrice + '\n' +
+                " grossPurchasePrice = " + grossPurchasePrice + '\n' +
+                " netSellingPrice = " + netSellingPrice + '\n' +
+                " grossSellingPrice = " + grossSellingPrice;
+    }
 }

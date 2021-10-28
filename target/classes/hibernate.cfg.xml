@@ -21,6 +21,9 @@
         <property name="connection.pool_size">5</property>
         <property name="current_session_context_class">thread</property>
         <mapping class="entities.Customer"/>
+        <mapping class="entities.Order"/>
+        <mapping class="entities.OrderDetails"/>
+        <mapping class="entities.Product"/>
 
 
     </session-factory>

@@ -5,6 +5,7 @@ import entities.Product;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
+import javax.persistence.NoResultException;
 import java.math.BigDecimal;
 
 public class App {
@@ -17,8 +18,12 @@ public class App {
 //        Session session = HibernateUtil.getSessionFactory().openSession();
 //        session.beginTransaction();
 
-        System.out.println(ProductSearchEngine.getGrossSellingPriceByProductId(1).toString());
-
+        try {
+            System.out.println(ProductSearchEngine.getProductDescriptionByProductId(1));
+        }catch (NoResultException e){
+            e.printStackTrace();
+            System.out.println("No such product");
+        }
 //        Product product = productComposer.createProduct(
 //                "yt-3884",
 //                "Tool set",
