@@ -20,15 +20,42 @@ public class ProductSearchEngine {
         return product.toString();
     }
 
+    public static BigDecimal getGrossSellingPriceByCatalogNumber(String catalogNumber) throws NoResultException {
+        var product = (Product) findProductByCatalogNumber(catalogNumber).get();
+        return product.getGrossSellingPrice();
+    }
 
+    public static String getProductDescriptionByCatalogNumber(String catalogNumber) throws NoResultException {
+        var product = (Product) findProductByCatalogNumber(catalogNumber).get();
+        return product.toString();
+    }
 
-    public static Optional<Object> findProductById(int id) {
+    private static Optional<Object> findProductById(int id) {
 
         var session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
             var query = session.createQuery("FROM Product WHERE productID =" + id);
             var product = Optional.of(query.getSingleResult());
+        if (product.isEmpty()){
+            return Optional.empty();
+        }
+
+        session.getTransaction().commit();
+        session.close();
+        HibernateUtil.close();
+
+        return product;
+
+    }
+
+    private static Optional<Object> findProductByCatalogNumber(String number) {
+
+        var session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        var query = session.createQuery("FROM Product WHERE catalogNumber =" + number);
+        var product = Optional.of(query.getSingleResult());
         if (product.isEmpty()){
             return Optional.empty();
         }

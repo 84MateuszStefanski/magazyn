@@ -1,8 +1,8 @@
-package composers;
+package utils;
 
 import java.math.BigDecimal;
 
-public enum Tax {
+enum Tax {
     TAX_8(BigDecimal.valueOf(0.08)),
     TAX_23(BigDecimal.valueOf(0.23));
 

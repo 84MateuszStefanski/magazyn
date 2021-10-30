@@ -1,11 +1,12 @@
-package composers;
+package utils;
 
 import entities.Product;
 
 import java.math.BigDecimal;
 
-public class ProductComposer {
+public class ProductRegistration implements ProductRegistrationInterface{
 
+    @Override
     public Product createProduct(
             String catalogNumber,
             String product_name,

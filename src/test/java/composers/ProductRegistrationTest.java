@@ -3,19 +3,20 @@ package composers;
 import entities.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utils.ProductRegistration;
 
 import java.math.BigDecimal;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-class ProductComposerTest {
+class ProductRegistrationTest {
 
     private Product product;
 
     @BeforeEach
     void createProductForTests() {
-        ProductComposer composer = new ProductComposer();
+        ProductRegistration composer = new ProductRegistration();
         product = composer.createProduct(
                 "yt-0400",
                 "Zestaw kluczy",

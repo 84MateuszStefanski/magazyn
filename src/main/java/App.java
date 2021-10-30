@@ -1,29 +1,26 @@
-import composers.CustomerComposer;
-import composers.ProductComposer;
 import daoservices.ProductSearchEngine;
-import entities.Product;
-import org.hibernate.Session;
-import utils.HibernateUtil;
+import utils.AdminPanel;
 
 import javax.persistence.NoResultException;
-import java.math.BigDecimal;
 
 public class App {
 
 
     public static void main(String[] args) {
 
+        AdminPanel.runAdminPanel();
+
 //        CustomerComposer composer = new CustomerComposer();
 //        ProductComposer productComposer = new ProductComposer();
 //        Session session = HibernateUtil.getSessionFactory().openSession();
 //        session.beginTransaction();
 
-        try {
-            System.out.println(ProductSearchEngine.getProductDescriptionByProductId(1));
-        }catch (NoResultException e){
-            e.printStackTrace();
-            System.out.println("No such product");
-        }
+//        try {
+//            System.out.println(ProductSearchEngine.getGrossSellingPriceByCatalogNumber("'yt-3884'"));
+//        }catch (NoResultException e){
+//            e.printStackTrace();
+//            System.out.println("No such product");
+//        }
 //        Product product = productComposer.createProduct(
 //                "yt-3884",
 //                "Tool set",
