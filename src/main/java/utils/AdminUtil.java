@@ -11,13 +11,11 @@ class AdminUtil {
     private static final Scanner SCANNER = new Scanner(System.in);
     private String login;
     private String password;
-    private String userChoice;
+
 
     protected void checkAdminLogData(){
-
             checkAdminLogin();
             checkAdminPassword();
-
     }
 
     private void checkAdminLogin() {
@@ -31,7 +29,7 @@ class AdminUtil {
             } else {
                 System.out.println("LOGIN CORRECT");
             }
-        } while (!login.equals(ADMIN_LOGIN) && !login.equals(EXIT_COMMAND));
+        } while (!login.equals(ADMIN_LOGIN));
 
     }
 
@@ -45,15 +43,16 @@ class AdminUtil {
             } else {
                 System.out.println("PASSWORD CORRECT");
             }
-        } while (!password.equals(ADMIN_PASSWORD) && !password.equals(EXIT_COMMAND));
+        } while (!password.equals(ADMIN_PASSWORD));
     }
 
-    protected boolean exitAdminPanel(String exit) {
-        return exit.trim().equalsIgnoreCase(EXIT_COMMAND);
-    }
+
+//    protected boolean exitAdminPanel(String exit) {
+//        return exit.trim().equalsIgnoreCase(EXIT_COMMAND);
+//    }
 
     private String userChoice(){
-        return SCANNER.nextLine();
+        return  SCANNER.nextLine();
     }
 
 

@@ -1,6 +1,6 @@
 package utils;
 
-import java.util.Scanner;
+
 
 public class AdminPanel {
 
@@ -15,9 +15,14 @@ public class AdminPanel {
 
         adminUtil.checkAdminLogData();
 
+        System.out.println("REGISTER NEW PRODUCT");
+        registration.createProduct();
+
 
 
 
 
     }
+
+
 }

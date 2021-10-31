@@ -1,29 +1,48 @@
 package utils;
 
 import entities.Product;
+import org.hibernate.Session;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.Scanner;
 
 public class ProductRegistration implements ProductRegistrationInterface{
 
+    private static final Scanner SCANNER = new Scanner(System.in);
+
     @Override
-    public Product createProduct(
-            String catalogNumber,
-            String product_name,
-            Integer quantity,
-            BigDecimal netPurchasePrice) {
+    public void createProduct() {
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
 
         Product product = new Product();
+
+        System.out.println("WRITE PROCUCT CATALOG NUMBER AND PRESS ENTER");
+        String catalogNumber = SCANNER.nextLine();
         product.setCatalogNumber(catalogNumber);
-        product.setProductName(product_name);
+
+        System.out.println("WRITE PROCUCT NAME AND PRESS ENTER");
+        String productName = SCANNER.nextLine();
+        product.setProductName(productName);
+
+        System.out.println("WRITE PROCUCT PURCHASE PRICE NET AND PRESS ENTER");
+        BigDecimal netPurchasePrice = new BigDecimal(SCANNER.nextLine());
         product.setNetPurchasePrice(netPurchasePrice);
+
+        System.out.println("WRITE PROCUCT QUANTITY AND PRESS ENTER");
+        Integer quantity = SCANNER.nextInt();
         product.setQuantity(quantity);
 
         product.setGrossPurchasePrice(grossPurchasePriceCalculate(netPurchasePrice));
         product.setNetSellingPrice(netSellPriceCalculate(netPurchasePrice));
         product.setGrossSellingPrice(grossSellPriceCalculate(product.getNetSellingPrice()));
 
-        return product;
+        session.save(product);
+        session.getTransaction().commit();
+        session.close();
+        HibernateUtil.close();
     }
 
 
@@ -62,5 +81,6 @@ public class ProductRegistration implements ProductRegistrationInterface{
     private boolean isNotNullOrZero(BigDecimal price) {
         return price != null && price.compareTo(BigDecimal.ZERO) > 0;
     }
+
 
 }
