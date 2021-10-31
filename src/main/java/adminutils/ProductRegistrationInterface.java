@@ -1,8 +1,4 @@
-package utils;
-
-import entities.Product;
-
-import java.math.BigDecimal;
+package adminutils;
 
 @FunctionalInterface
 public interface ProductRegistrationInterface {

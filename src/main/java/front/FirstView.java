@@ -1,0 +1,46 @@
+package front;
+
+import adminutils.AdminPanel;
+
+import java.util.Scanner;
+
+public class FirstView {
+    public static void run(){
+
+        final Scanner SCANNER = new Scanner(System.in);
+
+        System.out.println();
+        System.out.println("#####################################################################");
+        System.out.println("#                    WELCOME, THIS IS ORDERING PROGRAM              #");
+        System.out.println("#####################################################################");
+        System.out.println();
+
+        String userChoice;
+        do {
+            System.out.println();
+            System.out.println("Choose what you want to do, then press enter:");
+            System.out.println("[1] Add new customer");
+            System.out.println("[2] Submit your order");
+            System.out.println("[3] Enter admin panel");
+            System.out.println("[x] End");
+            userChoice = SCANNER.nextLine();
+            if (userChoice.trim().equals("1")) {
+                System.out.println("Register new customer " + '\n');
+                // registerCustomer.register();
+            } else if (userChoice.trim().equals("2")) {
+                System.out.println("Submit your order " + '\n');
+                // submitOrder.register();
+            } else if (userChoice.trim().equals("3")) {
+                System.out.println("Enter admin panel ");
+                AdminPanel.runAdminPanel();
+            } else if (userChoice.trim().equalsIgnoreCase("x")) {
+                System.out.println("###############################################################################");
+                System.out.println("#                    Thank You for using my program :)                        #");
+                System.out.println("###############################################################################");
+            } else {
+                System.out.println("Make your choice again");
+            }
+        } while (!userChoice.trim().equalsIgnoreCase("x"));
+
+    }
+}

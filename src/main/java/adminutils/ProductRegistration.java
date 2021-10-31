@@ -1,10 +1,10 @@
-package utils;
+package adminutils;
 
 import entities.Product;
 import org.hibernate.Session;
+import utils.HibernateUtil;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Scanner;
 
 public class ProductRegistration implements ProductRegistrationInterface{
