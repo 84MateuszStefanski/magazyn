@@ -11,18 +11,21 @@ class AdminUtil {
     private static final Scanner SCANNER = new Scanner(System.in);
     private String login;
     private String password;
+    private String userChoice;
 
     protected void checkAdminLogData(){
+
             checkAdminLogin();
             checkAdminPassword();
+
     }
 
     private void checkAdminLogin() {
 
-        System.out.println("TO LOG IN TO ADMIN PANEL, WRITE LOGIN AND PASSWORD." + '\n');
+        System.out.println("TO LOG IN, WRITE LOGIN AND PASSWORD." + '\n');
         do {
             System.out.println("PLEASE WRITE LOGIN AND PRESS ENTER" + '\n');
-            login = SCANNER.nextLine();
+            login = userChoice();
             if (!login.equals(ADMIN_LOGIN)) {
                 System.out.println("ACCESS DENIED , WRONG LOGIN" + '\n');
             } else {
@@ -36,7 +39,7 @@ class AdminUtil {
 
         do {
             System.out.println("PLEASE WRITE PASSWORD AND PRESS ENTER" + '\n');
-            password = SCANNER.nextLine();
+            password = userChoice();
             if (!password.equals(ADMIN_PASSWORD)) {
                 System.out.println("ACCESS DENIED , WRONG PASSWORD" + '\n');
             } else {
@@ -46,9 +49,12 @@ class AdminUtil {
     }
 
     protected boolean exitAdminPanel(String exit) {
-        return exit.equals(EXIT_COMMAND);
+        return exit.trim().equalsIgnoreCase(EXIT_COMMAND);
+    }
+
+    private String userChoice(){
+        return SCANNER.nextLine();
     }
 
 
 }
-//todo sprawić żeby wychodziło z programu na exit

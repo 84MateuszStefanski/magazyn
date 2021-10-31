@@ -8,7 +8,8 @@ public class App {
 
     public static void main(String[] args) {
 
-        AdminPanel.runAdminPanel();
+        run();
+
 
 //        CustomerComposer composer = new CustomerComposer();
 //        ProductComposer productComposer = new ProductComposer();
@@ -45,5 +46,9 @@ public class App {
 //        session.getTransaction().commit();
 //        session.close();
 //        HibernateUtil.close();
+    }
+
+    public static void run(){
+        AdminPanel.runAdminPanel();
     }
 }
