@@ -58,12 +58,14 @@ public class CustomerRegistration implements CustomerRegistrationInterface {
         String phoneNumber = SCANNER.nextLine();
         customer.setPhoneNumber(phoneNumber);
         System.out.println("AS NEW CUSTOMER YOUR CUSTOMER LEVEL WILL BE SET AS STANDARD" + '\n' +
-                ", BUY MORE TO GET HIGHER LEVEL");
+                ", BUY MORE TO GET HIGHER LEVEL" + '\n');
         customer.setCustomerLevel(CustomerLevel.STANDARD_0);
 
         session.save(customer);
         session.getTransaction().commit();
         session.close();
         HibernateUtil.close();
+
+        System.out.println("YOU HAVE BEEN REGISTERED, WE INVITE YOU TO PLACE AN ORDER");
     }
 }

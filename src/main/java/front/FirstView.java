@@ -1,6 +1,8 @@
 package front;
 
 import adminutils.AdminPanel;
+import customerutils.CustomerRegistration;
+import customerutils.CustomerRegistrationInterface;
 
 import java.util.Scanner;
 
@@ -28,13 +30,15 @@ public class FirstView implements Runnable {
             userChoice = SCANNER.nextLine();
             if (userChoice.trim().equals("1")) {
                 System.out.println("Register new customer " + '\n');
-                // registerCustomer.register();
+                CustomerRegistrationInterface registrationInterface = new CustomerRegistration();
+                registrationInterface.registerCustomer();
             } else if (userChoice.trim().equals("2")) {
                 System.out.println("Submit your order " + '\n');
                 // submitOrder.register();
             } else if (userChoice.trim().equals("3")) {
                 System.out.println("Enter admin panel ");
-                AdminPanel.runAdminPanel();
+                AdminPanel adminPanel = new AdminPanel();
+                adminPanel.runAdminPanel();
             } else if (userChoice.trim().equalsIgnoreCase("x")) {
                 System.out.println("###############################################################################");
                 System.out.println("#                    Thank You for using my program :)                        #");

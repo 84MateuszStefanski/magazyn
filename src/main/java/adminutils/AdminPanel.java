@@ -4,8 +4,10 @@ package adminutils;
 
 public class AdminPanel {
 
-    public static void runAdminPanel() {
-        ProductRegistration registration = new ProductRegistration();
+    ProductRegistrationInterface registration;
+
+    public void runAdminPanel() {
+
         AdminUtil adminUtil = new AdminUtil();
 
 

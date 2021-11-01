@@ -30,7 +30,7 @@ public class ProductSearchEngine {
         return product.toString();
     }
 
-    private static Optional<Object> findProductById(int id) {
+    public static Optional<Object> findProductById(int id) {
 
         var session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -49,7 +49,7 @@ public class ProductSearchEngine {
 
     }
 
-    private static Optional<Object> findProductByCatalogNumber(String number) {
+    public static Optional<Object> findProductByCatalogNumber(String number) {
 
         var session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -66,6 +66,18 @@ public class ProductSearchEngine {
 
         return product;
 
+    }
+
+    public static int checkProductAvailability(int id){
+        var session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+
+
+
+
+        session.getTransaction().commit();
+        session.close();
+        HibernateUtil.close();
     }
 
 }
