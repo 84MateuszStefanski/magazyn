@@ -4,8 +4,10 @@ import adminutils.AdminPanel;
 
 import java.util.Scanner;
 
-public class FirstView {
-    public static void run(){
+public class FirstView implements Runnable {
+
+    @Override
+    public void run(){
 
         final Scanner SCANNER = new Scanner(System.in);
 

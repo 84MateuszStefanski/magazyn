@@ -46,7 +46,7 @@ public class ProductRegistration implements ProductRegistrationInterface{
     }
 
 
-    private BigDecimal grossPurchasePriceCalculate(BigDecimal netPrice) {
+    protected BigDecimal grossPurchasePriceCalculate(BigDecimal netPrice) {
         if (isNotNullOrZero(netPrice)) {
             BigDecimal grossPrice =
                     netPrice.add(netPrice.multiply(Tax.TAX_23.getTaxRate()));
@@ -57,7 +57,7 @@ public class ProductRegistration implements ProductRegistrationInterface{
 
     }
 
-    private BigDecimal netSellPriceCalculate(BigDecimal netPurchacePrice) {
+    protected BigDecimal netSellPriceCalculate(BigDecimal netPurchacePrice) {
         if (isNotNullOrZero(netPurchacePrice)) {
             BigDecimal nettSellingPrice =
                     netPurchacePrice.add(netPurchacePrice.multiply(BigDecimal.valueOf(0.6)));
@@ -67,7 +67,7 @@ public class ProductRegistration implements ProductRegistrationInterface{
         }
     }
 
-    private BigDecimal grossSellPriceCalculate(BigDecimal netSellingPrice) {
+    protected BigDecimal grossSellPriceCalculate(BigDecimal netSellingPrice) {
         if (isNotNullOrZero(netSellingPrice)) {
             BigDecimal grossSellingPrice =
                     netSellingPrice.add(netSellingPrice.multiply(Tax.TAX_23.getTaxRate()));
@@ -78,7 +78,7 @@ public class ProductRegistration implements ProductRegistrationInterface{
 
     }
 
-    private boolean isNotNullOrZero(BigDecimal price) {
+    protected boolean isNotNullOrZero(BigDecimal price) {
         return price != null && price.compareTo(BigDecimal.ZERO) > 0;
     }
 

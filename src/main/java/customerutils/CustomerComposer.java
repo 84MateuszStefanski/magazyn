@@ -1,4 +1,4 @@
-package composers;
+package customerutils;
 
 import entities.Customer;
 import entities.CustomerLevel;

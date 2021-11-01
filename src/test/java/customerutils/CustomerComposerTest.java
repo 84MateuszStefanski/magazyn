@@ -1,5 +1,6 @@
-package composers;
+package customerutils;
 
+import customerutils.CustomerComposer;
 import entities.Customer;
 import org.junit.jupiter.api.Test;
 
