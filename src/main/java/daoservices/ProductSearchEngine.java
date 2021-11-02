@@ -68,16 +68,25 @@ public class ProductSearchEngine {
 
     }
 
-    public static int checkProductAvailability(int id){
+    public static int checkProductAvailability(String catalogNumber){
         var session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
+        var query = session.createQuery("quantity FROM Product WHERE catalogNumber =" + catalogNumber);
+        var productQuantityOptional = Optional.of(query.getSingleResult());
+        int productQuantity = (int) productQuantityOptional.get();
 
-
+        if (productQuantityOptional.isEmpty()) {
+            System.out.println("NO SUCH PRODUCT IN SALE");
+            productQuantity = 0;
+            return productQuantity;
+        }
 
         session.getTransaction().commit();
         session.close();
         HibernateUtil.close();
+
+        return productQuantity;
     }
 
 }

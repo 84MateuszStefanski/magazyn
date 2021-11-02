@@ -61,11 +61,19 @@ public class CustomerRegistration implements CustomerRegistrationInterface {
                 ", BUY MORE TO GET HIGHER LEVEL" + '\n');
         customer.setCustomerLevel(CustomerLevel.STANDARD_0);
 
-        session.save(customer);
-        session.getTransaction().commit();
-        session.close();
-        HibernateUtil.close();
+        if (!CustomerSearchEngine.theCustomerIsInDatabase(nip)){
+            session.save(customer);
+            session.getTransaction().commit();
+            session.close();
+            HibernateUtil.close();
+            System.out.println("YOU HAVE BEEN REGISTERED, WE INVITE YOU TO PLACE AN ORDER");
+        }else {
+            session.close();
+            HibernateUtil.close();
+            System.out.println("YOU ARE ALREADY OUR CUSTOMER, WE INVITE YOU TO PLACE AN ORDER");
+        }
 
-        System.out.println("YOU HAVE BEEN REGISTERED, WE INVITE YOU TO PLACE AN ORDER");
+
+
     }
 }

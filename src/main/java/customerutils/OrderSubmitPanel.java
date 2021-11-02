@@ -1,50 +1,56 @@
 package customerutils;
 
+import entities.Order;
+import entities.OrderDetails;
+import entities.OrderStatus;
+import org.hibernate.Session;
 import utils.HibernateUtil;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class OrderSubmitPanel {
 
     private static final Scanner SCANNER = new Scanner(System.in);
+    private Order order;
 
     public void submitOrder(){
 
         System.out.println("SUBMIT YOUR ORDER ");
         System.out.println("ENTER YOUR ID NUMBER AND PRESS ENTER");
-        int id = SCANNER.nextInt();
-        if (!theCustomerIsInDatabase(id)){
+        int customerId = SCANNER.nextInt();
+        if (!CustomerSearchEngine.theCustomerIsInDatabase(customerId)){
             System.out.println("PLEASE REGISTER, YOU ARE NOT IN OUR DATABASE");
         }else {
-            //todo
+            placeAnOrder(customerId);
         }
 
     }
 
-    /**A helper method that returns a boolean and checks if client is in the database by id*/
-    protected boolean theCustomerIsInDatabase(int id){
-        var session = HibernateUtil.getSessionFactory().openSession();
+    protected void placeAnOrder(int customerId){
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        var query = session.createQuery("FROM Customer WHERE customerID=" + id);
-        var customer = Optional.of(query.getSingleResult());
-        if (customer.isEmpty()){
-            return false;
-        }
-        return true;
+        this.order = new Order();
+        order.setCustomer(CustomerSearchEngine.getCustomerById(customerId));
+        order.setOrderDate(LocalDateTime.now().toLocalDate());
+        order.setStatus(OrderStatus.ACCEPTED_NOT_PAID);
+        order.setShippedDate(LocalDateTime.now().plusDays(2L).toLocalDate());
+        order.setOrderDetails(placeOrderDetailsToYourOrder());
+
+
+
+        session.save(order);
+        session.getTransaction().commit();
+        session.close();
+        HibernateUtil.close();
+
     }
 
-    /**
-     * this method will be use in near future
-     * */
-    protected boolean theCustomerIsInDatabase(String nip){
-        var session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        var query = session.createQuery("FROM Customer WHERE nip=" + nip);
-        var customer = Optional.of(query.getSingleResult());
-        if (customer.isEmpty()){
-            return false;
-        }
-        return true;
+    protected OrderDetails placeOrderDetailsToYourOrder(){
+        OrderDetails orderDetails = new OrderDetails();
+        System.out.println("WRITE PRODUCT ID OF THE PRODUCT THAT YOU WANT TO ORDER");
+        //TODO
     }
+
+
 }
