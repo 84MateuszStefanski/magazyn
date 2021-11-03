@@ -89,4 +89,25 @@ public class ProductSearchEngine {
         return productQuantity;
     }
 
+    public static int returnProductQuantitySearchedById(int id){
+        var session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        var query = session.createQuery("quantity FROM Product WHERE productID=" + id);
+        var productQuantityOptional = Optional.of(query.getSingleResult());
+        int productQuantity = (int) productQuantityOptional.get();
+
+        if (productQuantityOptional.isEmpty()) {
+            System.out.println("NO SUCH PRODUCT IN SALE");
+            productQuantity = 0;
+            return productQuantity;
+        }
+
+        session.getTransaction().commit();
+        session.close();
+        HibernateUtil.close();
+
+        return productQuantity;
+    }
+
 }

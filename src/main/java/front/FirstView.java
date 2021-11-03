@@ -3,6 +3,7 @@ package front;
 import adminutils.AdminPanel;
 import customerutils.CustomerRegistration;
 import customerutils.CustomerRegistrationInterface;
+import customerutils.OrderSubmitPanel;
 
 import java.util.Scanner;
 
@@ -34,7 +35,8 @@ public class FirstView implements Runnable {
                 registrationInterface.registerCustomer();
             } else if (userChoice.trim().equals("2")) {
                 System.out.println("Submit your order " + '\n');
-                // submitOrder.register();
+                OrderSubmitPanel submitPanel = new OrderSubmitPanel();
+                submitPanel.submitOrder();
             } else if (userChoice.trim().equals("3")) {
                 System.out.println("Enter admin panel ");
                 AdminPanel adminPanel = new AdminPanel();
