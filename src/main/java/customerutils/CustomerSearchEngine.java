@@ -27,7 +27,9 @@ public class CustomerSearchEngine {
     /**
      * A helper method that returns a boolean and checks if client is in the database by nip
      */
-    protected static boolean theCustomerIsInDatabase(String nip) {
+
+    //TODO sprawdzić dlaczego metoda nie działa
+    protected static boolean theCustomerIsInDatabaseByNip(String nip) {
         var session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         var query = session.createQuery("FROM Customer WHERE nip=" + nip);

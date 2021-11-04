@@ -18,6 +18,7 @@ public class AdminPanel {
         adminUtil.checkAdminLogData();
 
         System.out.println("REGISTER NEW PRODUCT");
+        registration = new ProductRegistration();
         registration.createProduct();
 
 
