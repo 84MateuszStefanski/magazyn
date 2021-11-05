@@ -93,7 +93,7 @@ public class ProductSearchEngine {
         var session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        var query = session.createQuery("quantity FROM Product WHERE productID=" + id);
+        var query = session.createQuery("SELECT quantity FROM Product WHERE productID=" + id);
         var productQuantityOptional = Optional.of(query.getSingleResult());
         int productQuantity = (int) productQuantityOptional.get();
 

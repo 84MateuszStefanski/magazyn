@@ -1,6 +1,7 @@
 package customerutils;
 
 import entities.Customer;
+import org.hibernate.Session;
 import utils.HibernateUtil;
 
 import java.util.Optional;
@@ -46,8 +47,8 @@ public class CustomerSearchEngine {
     /**
      * A helper method that returns a Customer who places the order
      */
-    protected static Customer getCustomerById(int id) {
-        var session = HibernateUtil.getSessionFactory().openSession();
+    protected static Customer getCustomerById(int id , Session session) {
+
         session.beginTransaction();
 
         var query = session.createQuery("FROM Customer WHERE customerID=" + id);
@@ -55,8 +56,7 @@ public class CustomerSearchEngine {
 
         session.save(customer);
         session.getTransaction().commit();
-        session.close();
-        HibernateUtil.close();
+
 
         return customer;
     }
