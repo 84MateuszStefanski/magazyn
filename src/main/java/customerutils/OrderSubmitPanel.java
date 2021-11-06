@@ -1,7 +1,7 @@
 
 package customerutils;
 
-import daoservices.ProductSearchEngine;
+
 import entities.*;
 import org.hibernate.Session;
 import utils.HibernateUtil;
@@ -16,9 +16,9 @@ public class OrderSubmitPanel {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    Session session = HibernateUtil.getSessionFactory().openSession();
 
-    public void submitOrder() {
+
+    public void submitOrder(Session session) {
         session.beginTransaction();
 
         System.out.println("SUBMIT YOUR ORDER ");
@@ -27,17 +27,15 @@ public class OrderSubmitPanel {
 //        if (!CustomerSearchEngine.theCustomerIsInDatabase(customerId)){
 //            System.out.println("PLEASE REGISTER, YOU ARE NOT IN OUR DATABASE");
 //        }else {
-            System.out.println("WELCOME " + getCustomerByIdd(customerId).getCustomerName());
-            placeAnOrder(customerId);
+            System.out.println("WELCOME " + getCustomerByIdd(customerId,session).getCustomerName());
+            placeAnOrder(customerId, session);
 //        }
 
         session.getTransaction().commit();
-        session.close();
-        HibernateUtil.close();
 
     }
 
-    protected OrderDetails placeOrderDetailsToYourOrder(){
+    protected OrderDetails placeOrderDetailsToYourOrder(Session session){
 
         OrderDetails orderDetails = new OrderDetails();
         System.out.println("WRITE PRODUCT ID OF THE PRODUCT THAT YOU WANT TO ORDER");
@@ -46,10 +44,10 @@ public class OrderSubmitPanel {
         System.out.println("HOW MANY PIECES YOU WANT TO ORDER?");
         int quantity = SCANNER.nextInt();
         orderDetails.setQuantityOrdered(quantity);
-        orderDetails.setGrossSellingPrice(getGrossSellingPriceByProductIdd(productId));
-        if (lowerStockQuantityOfProduct(productId, quantity)){
-            orderDetails.setTotalAmount(countTotalAmount(productId, quantity));
-            System.out.println("TOTAL AMOUNT IS : " + countTotalAmount(productId, quantity));
+        orderDetails.setGrossSellingPrice(getGrossSellingPriceByProductIdd(productId,session));
+        if (lowerStockQuantityOfProduct(productId, quantity, session)){
+            orderDetails.setTotalAmount(countTotalAmount(productId, quantity,session));
+            System.out.println("TOTAL AMOUNT IS : " + countTotalAmount(productId, quantity,session));
         }
 
         session.save(orderDetails);
@@ -57,22 +55,22 @@ public class OrderSubmitPanel {
         return orderDetails;
     }
 
-    protected void placeAnOrder(int customerId){
+    protected void placeAnOrder(int customerId,Session session){
 
         Order order = new Order();
-        order.setCustomer(getCustomerByIdd(customerId));
+        order.setCustomer(getCustomerByIdd(customerId,session));
         order.setOrderDate(LocalDateTime.now().toLocalDate());
         order.setStatus(OrderStatus.ACCEPTED_NOT_PAID);
         order.setShippedDate(LocalDateTime.now().plusDays(2L).toLocalDate());
-        order.setOrderDetails(placeOrderDetailsToYourOrder());
+        order.setOrderDetails(placeOrderDetailsToYourOrder(session));
 
         session.save(order);
     }
 
-    private boolean lowerStockQuantityOfProduct(int productId, int quantityOrdered){
+    private boolean lowerStockQuantityOfProduct(int productId, int quantityOrdered,Session session){
 
 
-        var originalQuantity = returnProductQuantitySearchedByIdd(productId);
+        var originalQuantity = returnProductQuantitySearchedByIdd(productId, session);
         int finalQuantity = originalQuantity - quantityOrdered;
 
         if (quantityOrdered <= originalQuantity){
@@ -88,16 +86,16 @@ public class OrderSubmitPanel {
         }
     }
 
-    private BigDecimal countTotalAmount(int productId, int quantityOrdered){
+    private BigDecimal countTotalAmount(int productId, int quantityOrdered, Session session){
 
-        BigDecimal price = getGrossSellingPriceByProductIdd(productId);
+        BigDecimal price = getGrossSellingPriceByProductIdd(productId, session);
         BigDecimal totalAmount = price.multiply(BigDecimal.valueOf(quantityOrdered));
 
 
         return totalAmount;
     }
 
-    private Customer getCustomerByIdd(int id) {
+    private Customer getCustomerByIdd(int id ,Session session) {
 
         var query = session.createQuery("FROM Customer WHERE customerID=" + id);
         Customer customer = (Customer) Optional.of(query.getSingleResult()).get();
@@ -107,7 +105,7 @@ public class OrderSubmitPanel {
         return customer;
     }
 
-    private int returnProductQuantitySearchedByIdd(int id){
+    private int returnProductQuantitySearchedByIdd(int id, Session session){
 
 
         var query = session.createQuery("SELECT quantity FROM Product WHERE productID=" + id);
@@ -123,12 +121,12 @@ public class OrderSubmitPanel {
         return productQuantity;
     }
 
-    public BigDecimal getGrossSellingPriceByProductIdd(int id) throws NoResultException {
-        var product = (Product) findProductByIdd(id).get();
+    public BigDecimal getGrossSellingPriceByProductIdd(int id,Session session) throws NoResultException {
+        var product = (Product) findProductByIdd(id,session).get();
         return product.getGrossSellingPrice();
     }
 
-    public Optional<Object> findProductByIdd(int id) {
+    public Optional<Object> findProductByIdd(int id, Session session) {
 
         var query = session.createQuery("FROM Product WHERE productID =" + id);
         var product = Optional.of(query.getSingleResult());

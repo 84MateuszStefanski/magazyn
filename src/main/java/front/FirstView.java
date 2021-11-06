@@ -4,6 +4,8 @@ import adminutils.AdminPanel;
 import customerutils.CustomerRegistration;
 import customerutils.CustomerRegistrationInterface;
 import customerutils.OrderSubmitPanel;
+import org.hibernate.Session;
+import utils.HibernateUtil;
 
 import java.util.Scanner;
 
@@ -12,6 +14,7 @@ public class FirstView implements Runnable {
     @Override
     public void run(){
 
+        final Session session = HibernateUtil.getSessionFactory().openSession();
         final Scanner SCANNER = new Scanner(System.in);
 
         System.out.println();
@@ -32,23 +35,25 @@ public class FirstView implements Runnable {
             if (userChoice.trim().equals("1")) {
                 System.out.println("Register new customer " + '\n');
                 CustomerRegistrationInterface registrationInterface = new CustomerRegistration();
-                registrationInterface.registerCustomer();
+                registrationInterface.registerCustomer(session);
             } else if (userChoice.trim().equals("2")) {
                 System.out.println("Submit your order " + '\n');
                 OrderSubmitPanel submitPanel = new OrderSubmitPanel();
-                submitPanel.submitOrder();
+                submitPanel.submitOrder(session);
             } else if (userChoice.trim().equals("3")) {
-                System.out.println("Enter admin panel ");
+                System.out.println();
                 AdminPanel adminPanel = new AdminPanel();
-                adminPanel.runAdminPanel();
+                adminPanel.runAdminPanel(session);
             } else if (userChoice.trim().equalsIgnoreCase("x")) {
                 System.out.println("###############################################################################");
-                System.out.println("#                    Thank You for using my program :)                        #");
+                System.out.println("#                    THANK YOU FOR USING MY PROGRAM :)                        #");
                 System.out.println("###############################################################################");
             } else {
-                System.out.println("Make your choice again");
+                System.out.println("MAKE YOUR CHOICE AGAIN");
             }
         } while (!userChoice.trim().equalsIgnoreCase("x"));
 
+        session.close();
+        HibernateUtil.close();
     }
 }

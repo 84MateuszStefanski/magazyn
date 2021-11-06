@@ -14,6 +14,7 @@ class AdminUtil {
 
 
     protected void checkAdminLogData(){
+
             checkAdminLogin();
             checkAdminPassword();
     }
@@ -45,11 +46,6 @@ class AdminUtil {
             }
         } while (!password.equals(ADMIN_PASSWORD));
     }
-
-
-//    protected boolean exitAdminPanel(String exit) {
-//        return exit.trim().equalsIgnoreCase(EXIT_COMMAND);
-//    }
 
     private String userChoice(){
         return  SCANNER.nextLine();

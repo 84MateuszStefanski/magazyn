@@ -1,7 +1,9 @@
 package adminutils;
 
+import org.hibernate.Session;
+
 @FunctionalInterface
 public interface ProductRegistrationInterface {
 
-    void createProduct();
+    void createProduct(Session session);
 }

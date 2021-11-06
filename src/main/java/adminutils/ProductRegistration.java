@@ -12,26 +12,26 @@ public class ProductRegistration implements ProductRegistrationInterface{
     private static final Scanner SCANNER = new Scanner(System.in);
 
     @Override
-    public void createProduct() {
+    public void createProduct(Session session) {
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
         Product product = new Product();
+        System.out.println("WELCOME TO PRODUCT REGISTRATION PANEL" + '\n');
 
-        System.out.println("WRITE PROCUCT CATALOG NUMBER AND PRESS ENTER");
+        System.out.println("WRITE PRODUCT CATALOG NUMBER AND PRESS ENTER");
         String catalogNumber = SCANNER.nextLine();
         product.setCatalogNumber(catalogNumber);
 
-        System.out.println("WRITE PROCUCT NAME AND PRESS ENTER");
+        System.out.println("WRITE PRODUCT NAME AND PRESS ENTER");
         String productName = SCANNER.nextLine();
         product.setProductName(productName);
 
-        System.out.println("WRITE PROCUCT PURCHASE PRICE NET AND PRESS ENTER");
+        System.out.println("WRITE PRODUCT PURCHASE PRICE NET AND PRESS ENTER");
         BigDecimal netPurchasePrice = new BigDecimal(SCANNER.nextLine());
         product.setNetPurchasePrice(netPurchasePrice);
 
-        System.out.println("WRITE PROCUCT QUANTITY AND PRESS ENTER");
+        System.out.println("WRITE PRODUCT QUANTITY AND PRESS ENTER");
         Integer quantity = SCANNER.nextInt();
         product.setQuantity(quantity);
 
@@ -41,10 +41,7 @@ public class ProductRegistration implements ProductRegistrationInterface{
 
         session.save(product);
         session.getTransaction().commit();
-        session.close();
-        HibernateUtil.close();
     }
-
 
     protected BigDecimal grossPurchasePriceCalculate(BigDecimal netPrice) {
         if (isNotNullOrZero(netPrice)) {
@@ -57,10 +54,10 @@ public class ProductRegistration implements ProductRegistrationInterface{
 
     }
 
-    protected BigDecimal netSellPriceCalculate(BigDecimal netPurchacePrice) {
-        if (isNotNullOrZero(netPurchacePrice)) {
+    protected BigDecimal netSellPriceCalculate(BigDecimal netPurchasePrice) {
+        if (isNotNullOrZero(netPurchasePrice)) {
             BigDecimal nettSellingPrice =
-                    netPurchacePrice.add(netPurchacePrice.multiply(BigDecimal.valueOf(0.6)));
+                    netPurchasePrice.add(netPurchasePrice.multiply(BigDecimal.valueOf(0.6)));
             return nettSellingPrice;
         } else {
             return BigDecimal.ZERO;
