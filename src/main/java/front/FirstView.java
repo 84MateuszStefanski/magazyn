@@ -38,7 +38,7 @@ public class FirstView implements Runnable {
                 registrationInterface.registerCustomer(session);
             } else if (userChoice.trim().equals("2")) {
                 System.out.println("Submit your order " + '\n');
-                OrderSubmitPanel submitPanel = new OrderSubmitPanel();
+                OrderSubmitPanel submitPanel = OrderSubmitPanel.getOrderSubmitPanel();
                 submitPanel.submitOrder(session);
             } else if (userChoice.trim().equals("3")) {
                 System.out.println();

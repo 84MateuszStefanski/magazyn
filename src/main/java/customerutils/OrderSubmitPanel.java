@@ -4,7 +4,6 @@ package customerutils;
 
 import entities.*;
 import org.hibernate.Session;
-import utils.HibernateUtil;
 
 import javax.persistence.NoResultException;
 import java.math.BigDecimal;
@@ -12,11 +11,22 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Scanner;
 
+
 public class OrderSubmitPanel {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
+    private Order order;
+    private OrderDetails orderDetails;
 
+    public static OrderSubmitPanel getOrderSubmitPanel(){
+        return new OrderSubmitPanel();
+    }
+
+    private OrderSubmitPanel() {
+        this.order = new Order();
+        this.orderDetails = new OrderDetails();
+    }
 
     public void submitOrder(Session session) {
         session.beginTransaction();
@@ -37,7 +47,6 @@ public class OrderSubmitPanel {
 
     protected OrderDetails placeOrderDetailsToYourOrder(Session session){
 
-        OrderDetails orderDetails = new OrderDetails();
         System.out.println("WRITE PRODUCT ID OF THE PRODUCT THAT YOU WANT TO ORDER");
         int productId = SCANNER.nextInt();
         orderDetails.setProductID(productId);
@@ -57,12 +66,12 @@ public class OrderSubmitPanel {
 
     protected void placeAnOrder(int customerId,Session session){
 
-        Order order = new Order();
         order.setCustomer(getCustomerByIdd(customerId,session));
         order.setOrderDate(LocalDateTime.now().toLocalDate());
         order.setStatus(OrderStatus.ACCEPTED_NOT_PAID);
         order.setShippedDate(LocalDateTime.now().plusDays(2L).toLocalDate());
         order.setOrderDetails(placeOrderDetailsToYourOrder(session));
+        OrderDescription.getOrderDescription(order.getOrderID(),session);
 
         session.save(order);
     }
@@ -121,12 +130,12 @@ public class OrderSubmitPanel {
         return productQuantity;
     }
 
-    public BigDecimal getGrossSellingPriceByProductIdd(int id,Session session) throws NoResultException {
+    private BigDecimal getGrossSellingPriceByProductIdd(int id,Session session) throws NoResultException {
         var product = (Product) findProductByIdd(id,session).get();
         return product.getGrossSellingPrice();
     }
 
-    public Optional<Object> findProductByIdd(int id, Session session) {
+    private Optional<Object> findProductByIdd(int id, Session session) {
 
         var query = session.createQuery("FROM Product WHERE productID =" + id);
         var product = Optional.of(query.getSingleResult());

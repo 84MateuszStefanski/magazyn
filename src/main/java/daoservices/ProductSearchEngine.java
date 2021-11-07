@@ -1,6 +1,7 @@
 package daoservices;
 
 import entities.Product;
+import org.hibernate.Session;
 import utils.HibernateUtil;
 
 import javax.persistence.NoResultException;
@@ -10,13 +11,13 @@ import java.util.Optional;
 public class ProductSearchEngine {
 
 
-    public static BigDecimal getGrossSellingPriceByProductId(int id) throws NoResultException {
-        var product = (Product) findProductById(id).get();
+    public static BigDecimal getGrossSellingPriceByProductId(int id,Session session) throws NoResultException {
+        var product = (Product) findProductById(id,session).get();
         return product.getGrossSellingPrice();
     }
 
-    public static String getProductDescriptionByProductId(int id) throws NoResultException {
-        var product = (Product) findProductById(id).get();
+    public static String getProductDescriptionByProductId(int id,Session session) throws NoResultException {
+        var product = (Product) findProductById(id, session).get();
         return product.toString();
     }
 
@@ -30,9 +31,7 @@ public class ProductSearchEngine {
         return product.toString();
     }
 
-    public static Optional<Object> findProductById(int id) {
-
-        var session = HibernateUtil.getSessionFactory().openSession();
+    public static Optional<Object> findProductById(int id,Session session) {
         session.beginTransaction();
 
             var query = session.createQuery("FROM Product WHERE productID =" + id);
@@ -42,8 +41,6 @@ public class ProductSearchEngine {
         }
 
         session.getTransaction().commit();
-        session.close();
-        HibernateUtil.close();
 
         return product;
 
@@ -89,8 +86,8 @@ public class ProductSearchEngine {
         return productQuantity;
     }
 
-    public static int returnProductQuantitySearchedById(int id){
-        var session = HibernateUtil.getSessionFactory().openSession();
+    public static int returnProductQuantitySearchedById(int id, Session session){
+
         session.beginTransaction();
 
         var query = session.createQuery("SELECT quantity FROM Product WHERE productID=" + id);
@@ -104,8 +101,6 @@ public class ProductSearchEngine {
         }
 
         session.getTransaction().commit();
-        session.close();
-        HibernateUtil.close();
 
         return productQuantity;
     }
