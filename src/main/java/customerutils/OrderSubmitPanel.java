@@ -4,6 +4,7 @@ package customerutils;
 
 import entities.*;
 import org.hibernate.Session;
+import services.SendEmailService;
 
 import javax.persistence.NoResultException;
 import java.math.BigDecimal;
@@ -16,8 +17,8 @@ public class OrderSubmitPanel {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    private Order order;
-    private OrderDetails orderDetails;
+    private final Order order;
+    private final OrderDetails orderDetails;
 
     public static OrderSubmitPanel getOrderSubmitPanel(){
         return new OrderSubmitPanel();
@@ -34,15 +35,15 @@ public class OrderSubmitPanel {
         System.out.println("SUBMIT YOUR ORDER ");
         System.out.println("ENTER YOUR ID NUMBER AND PRESS ENTER");
         int customerId = SCANNER.nextInt();
-//        if (!CustomerSearchEngine.theCustomerIsInDatabase(customerId)){
-//            System.out.println("PLEASE REGISTER, YOU ARE NOT IN OUR DATABASE");
-//        }else {
             System.out.println("WELCOME " + getCustomerByIdd(customerId,session).getCustomerName());
-            placeAnOrder(customerId, session);
-//        }
+           try {
+               placeAnOrder(customerId, session);
+           }catch (NoResultException e){
+               e.printStackTrace();
+               System.out.println("PLEASE REGISTER, YOU ARE NOT IN OUR DATABASE");
+           }
 
         session.getTransaction().commit();
-
     }
 
     protected OrderDetails placeOrderDetailsToYourOrder(Session session){
@@ -50,6 +51,7 @@ public class OrderSubmitPanel {
         System.out.println("WRITE PRODUCT ID OF THE PRODUCT THAT YOU WANT TO ORDER");
         int productId = SCANNER.nextInt();
         orderDetails.setProductID(productId);
+        orderDetails.setProductName(getProductNameForOrderDetails(productId,session));
         System.out.println("HOW MANY PIECES YOU WANT TO ORDER?");
         int quantity = SCANNER.nextInt();
         orderDetails.setQuantityOrdered(quantity);
@@ -71,7 +73,10 @@ public class OrderSubmitPanel {
         order.setStatus(OrderStatus.ACCEPTED_NOT_PAID);
         order.setShippedDate(LocalDateTime.now().plusDays(2L).toLocalDate());
         order.setOrderDetails(placeOrderDetailsToYourOrder(session));
-        OrderDescription.getOrderDescription(order.getOrderID(),session);
+        var customerEmailForOrderConfirmation = getCustomerEmail(customerId,session);
+        SendEmailService emailService = new SendEmailService();
+        String message = getOrderDescription();
+        emailService.sendEmailWithOrderConfirmation(message,customerEmailForOrderConfirmation);
 
         session.save(order);
     }
@@ -146,5 +151,28 @@ public class OrderSubmitPanel {
         return product;
 
     }
+
+    private String getProductNameForOrderDetails(int id, Session session){
+        var query = session.createQuery("SELECT productName FROM Product WHERE productID="+id);
+        var productNameOptional = Optional.ofNullable(query.getSingleResult());
+        String productName = (String) productNameOptional.get();
+        return productName;
+    }
+
+    private String getCustomerEmail(int customerId, Session session){
+        var query = session.createQuery("SELECT email FROM Customer WHERE customerID=" + customerId);
+        var emailOptional= Optional.ofNullable(query.getSingleResult());
+        String email = (String) emailOptional.get();
+        return email;
+    }
+
+    public String getOrderDescription(){
+        return  "THANK YOU " + order.getCustomer().getCustomerName() + " FOR YOUR ORDER NR : " + order.getOrderID() + '\n' +
+                    "YOU ORDERED " + orderDetails.getQuantityOrdered() + " PIECES OF  " + orderDetails.getProductName() + '\n' +
+                    "FOR TOTAL COST : " + orderDetails.getTotalAmount().toString() + '\n' +
+                    "YOUR ORDER WILL BE SHIPPED " + order.getShippedDate().toString();
+
+    }
+
 }
 

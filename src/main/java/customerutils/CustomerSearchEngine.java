@@ -11,17 +11,13 @@ public class CustomerSearchEngine {
     /**
      * A helper method that returns a boolean and checks if client is in the database by id
      */
-    protected static boolean theCustomerIsInDatabase(int id) {
-        var session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
+    protected static boolean theCustomerIsInDatabase(int id, Session session) {
+
         var query = session.createQuery("FROM Customer WHERE customerID=" + id);
         Object customer = Optional.of(query.getSingleResult()).get();
-        if (customer instanceof Customer) {
+        if (customer instanceof Customer && id == ((Customer) customer).getCustomerID()) {
             return true;
         }
-        session.getTransaction().commit();
-        session.close();
-        HibernateUtil.close();
         return false;
     }
 

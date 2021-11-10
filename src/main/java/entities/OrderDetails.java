@@ -23,6 +23,10 @@ public class OrderDetails {
     private Integer productID;
 
     @Column
+    @JoinTable(name = "productName")
+    private String productName;
+
+    @Column
     private int quantityOrdered;
 
     @Column

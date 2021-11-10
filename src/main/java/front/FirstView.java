@@ -40,6 +40,7 @@ public class FirstView implements Runnable {
                 System.out.println("Submit your order " + '\n');
                 OrderSubmitPanel submitPanel = OrderSubmitPanel.getOrderSubmitPanel();
                 submitPanel.submitOrder(session);
+                System.out.println(submitPanel.getOrderDescription());
             } else if (userChoice.trim().equals("3")) {
                 System.out.println();
                 AdminPanel adminPanel = new AdminPanel();

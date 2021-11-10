@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+@Deprecated
 class ProductRegistrationTest {
 
     private Product product;

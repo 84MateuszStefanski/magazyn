@@ -2,7 +2,7 @@ package customerutils;
 
 import entities.Customer;
 import entities.CustomerLevel;
-
+@Deprecated
 public class CustomerComposer {
 
     public Customer createCustomer(

@@ -32,8 +32,4 @@ public class Order {
     @OneToOne
     private OrderDetails orderDetails;
 
-
-
-
-
 }
