@@ -14,7 +14,28 @@
         <junit.version>5.0.0</junit.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </releases>
+            <id>smsapi</id>
+            <name>smsapi</name>
+            <url>https://labs.smsapi.com/maven/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
     <dependencies>
+
+        <dependency>
+            <groupId>pl.smsapi</groupId>
+            <artifactId>smsapi-lib</artifactId>
+            <version>2.5</version>
+        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
