@@ -8,7 +8,8 @@ import java.util.Scanner;
 public class AdminPanel {
 
     private static final Scanner SCANNER = new Scanner(System.in);
-    ProductRegistrationInterface registration;
+    private ProductRegistrationInterface registration;
+    private ProductQuantityMagnifier quantityMagnifier;
 
     public void runAdminPanel(Session session) {
 
@@ -16,16 +17,21 @@ public class AdminPanel {
         String userChoice;
 
         do {
+            adminUtil.checkAdminLogData();
             System.out.println("WELCOME TO ADMIN PANEL" + '\n');
             System.out.println("IF YOU WANT TO REGISTER PRODUCT WRITE 1 AND PRESS ENTER" + '\n');
+            System.out.println("IF YOU WANT TO INCREASE PRODUCT QUANTITY WRITE 2 AND PRESS ENTER" + '\n');
             System.out.println("IF YOU WANT TO EXIT WRITE -exit- AND PRESS ENTER" + '\n');
 
            userChoice = SCANNER.nextLine();
 
             if (userChoice.trim().equals("1")) {
-                adminUtil.checkAdminLogData();
                 registration = new ProductRegistration();
                 registration.createProduct(session);
+            }
+            if (userChoice.trim().equals("2")){
+                quantityMagnifier = new ProductQuantityMagnifier();
+                quantityMagnifier.increaseProductQuantity(session);
             }
             if (!userChoice.trim().equals("1") && !userChoice.trim().equalsIgnoreCase("exit")){
                 System.out.println("CHOOSE ONE OF THE OPTIONS" + '\n');

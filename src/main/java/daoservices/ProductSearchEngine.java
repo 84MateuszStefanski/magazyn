@@ -86,10 +86,7 @@ public class ProductSearchEngine {
         return productQuantity;
     }
 
-    public static int returnProductQuantitySearchedById(int id, Session session){
-
-        session.beginTransaction();
-
+    public static int getProductQuantitySearchedById(int id, Session session){
         var query = session.createQuery("SELECT quantity FROM Product WHERE productID=" + id);
         var productQuantityOptional = Optional.of(query.getSingleResult());
         int productQuantity = (int) productQuantityOptional.get();
@@ -99,9 +96,6 @@ public class ProductSearchEngine {
             productQuantity = 0;
             return productQuantity;
         }
-
-        session.getTransaction().commit();
-
         return productQuantity;
     }
 

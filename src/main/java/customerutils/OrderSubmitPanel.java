@@ -88,7 +88,7 @@ public class OrderSubmitPanel {
         int finalQuantity = originalQuantity - quantityOrdered;
 
         if (quantityOrdered <= originalQuantity){
-            var query = session.createQuery("UPDATE Product SET quantity =" + finalQuantity + "WHERE productID="+productId);
+            var query = session.createQuery("UPDATE Product SET quantity =" + finalQuantity + " WHERE productID="+productId);
             query.executeUpdate();
 
             return true;
