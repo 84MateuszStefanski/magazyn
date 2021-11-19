@@ -1,7 +1,7 @@
 
 package customerutils;
 
-
+import static daoservices.ProductSearchEngine.*;
 import entities.*;
 import org.hibernate.Session;
 import services.SendEmailService;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Scanner;
-import static daoservices.ProductSearchEngine.*;
+
 
 
 public class OrderSubmitPanel {
@@ -47,7 +47,7 @@ public class OrderSubmitPanel {
         session.getTransaction().commit();
     }
 
-    protected OrderDetails placeOrderDetailsToYourOrder(Session session){
+    private OrderDetails placeOrderDetailsToYourOrder(Session session){
 
         System.out.println("WRITE PRODUCT ID OF THE PRODUCT THAT YOU WANT TO ORDER");
         int productId = SCANNER.nextInt();
@@ -104,9 +104,8 @@ public class OrderSubmitPanel {
     private BigDecimal countTotalAmount(int productId, int quantityOrdered, Session session){
 
         BigDecimal price = getGrossSellingPriceById(productId, session);
-        BigDecimal totalAmount = price.multiply(BigDecimal.valueOf(quantityOrdered));
+        return price.multiply(BigDecimal.valueOf(quantityOrdered));
 
-        return totalAmount;
     }
 
     private Customer getCustomerByIdd(int id ,Session session) {
@@ -122,8 +121,7 @@ public class OrderSubmitPanel {
     private String getCustomerEmail(int customerId, Session session){
         var query = session.createQuery("SELECT email FROM Customer WHERE customerID=" + customerId);
         var emailOptional= Optional.ofNullable(query.getSingleResult());
-        String email = (String) emailOptional.get();
-        return email;
+        return (String) emailOptional.get();
     }
 
     public String getOrderDescription(){

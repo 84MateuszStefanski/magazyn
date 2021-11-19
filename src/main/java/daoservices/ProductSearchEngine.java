@@ -34,7 +34,6 @@ public class ProductSearchEngine {
     /**This method unpacks optional from the methods below and returns a Product class object*/
     private static Product getProductById(int id, Session session) throws NoResultException{
         return (Product)getProductOptionalById(id,session).get();
-
     }
     /**This method returns an object of class Product wrapped in optional*/
     private static Optional<Object> getProductOptionalById(int id, Session session) throws NoResultException{
