@@ -9,12 +9,11 @@ public class ProductQuantityMagnifier {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-
     void increaseProductQuantity(Session session){
         session.beginTransaction();
         System.out.println("PLEASE WRITE PRODUCT ID WITCH QUANTITY YOU WANT TO INCREASE" + '\n');
         int productId = SCANNER.nextInt();
-        int productQuantity = ProductSearchEngine.getProductQuantitySearchedById(productId,session);
+        int productQuantity = ProductSearchEngine.getProductQuantityById(productId,session);
         System.out.println("ACTUAL QUANTITY IS " + productQuantity + '\n');
         System.out.println("PLEASE WRITE QUANTITY YOU WANT TO INCREASE" + '\n');
         int productQuantityToIncrease = SCANNER.nextInt();

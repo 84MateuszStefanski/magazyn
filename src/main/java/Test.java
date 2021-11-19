@@ -1,8 +1,7 @@
-package utils;
-
 import daoservices.ProductSearchEngine;
 import entities.Product;
 import org.hibernate.Session;
+import utils.HibernateUtil;
 
 import javax.persistence.NoResultException;
 
@@ -13,8 +12,7 @@ public class Test {
         session.beginTransaction();
 
       try {
-          Product product = ProductSearchEngine.getProductById(53,session);
-          System.out.println(product.getProductName());
+          System.out.println(ProductSearchEngine.getProductList(session));
       }catch (NoResultException e){
           e.printStackTrace();
       }

@@ -47,9 +47,9 @@ public class Product {
                 " catalogNumber = " + catalogNumber + '\n' +
                 " productName = " + productName + '\n' +
                 " quantity = " + quantity + '\n' +
-                " netPurchasePrice = " + netPurchasePrice + '\n' +
-                " grossPurchasePrice = " + grossPurchasePrice + '\n' +
                 " netSellingPrice = " + netSellingPrice + '\n' +
-                " grossSellingPrice = " + grossSellingPrice;
+                " grossSellingPrice = " + grossSellingPrice +
+                '\n' +
+                '\n';
     }
 }
