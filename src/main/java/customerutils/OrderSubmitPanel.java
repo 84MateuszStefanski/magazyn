@@ -100,11 +100,11 @@ public class OrderSubmitPanel {
         }
     }
 
+
     private BigDecimal countTotalAmount(int productId, int quantityOrdered, Session session){
 
         BigDecimal price = getGrossSellingPriceByProductIdd(productId, session);
         BigDecimal totalAmount = price.multiply(BigDecimal.valueOf(quantityOrdered));
-
 
         return totalAmount;
     }

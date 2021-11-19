@@ -1,4 +1,4 @@
-package customerutils;
+package daoservices;
 
 import entities.Customer;
 import org.hibernate.Session;
