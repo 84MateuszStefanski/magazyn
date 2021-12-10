@@ -4,6 +4,7 @@ import adminutils.AdminPanel;
 import customerutils.CustomerRegistration;
 import customerutils.CustomerRegistrationInterface;
 import customerutils.OrderSubmitPanel;
+import daoservices.ProductSearchEngine;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
@@ -27,12 +28,15 @@ public class FirstView implements Runnable {
         do {
             System.out.println();
             System.out.println("Choose what you want to do, then press enter:");
+            System.out.println("[0] Show all products");
             System.out.println("[1] Add new customer");
             System.out.println("[2] Submit your order");
             System.out.println("[3] Enter admin panel");
             System.out.println("[x] End");
             userChoice = SCANNER.nextLine();
-            if (userChoice.trim().equals("1")) {
+            if (userChoice.trim().equals("0")){
+                System.out.println(ProductSearchEngine.getProductList(session));
+            } else if (userChoice.trim().equals("1")) {
                 System.out.println("Register new customer " + '\n');
                 CustomerRegistrationInterface registrationInterface = new CustomerRegistration();
                 registrationInterface.registerCustomer(session);
